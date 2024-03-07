@@ -1,0 +1,76 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String    @id
+  email       String    @unique
+  firstname   String
+  lastname    String
+  avatar_url  String
+  posts       Post[]
+  comments    Comment[]
+  likes       Like[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  followed_by Follows[] @relation("followed_by")
+  following   Follows[] @relation("following")
+}
+
+model Post {
+  id         String    @id @default(uuid())
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  title      String
+  content    String
+  summary    String
+  published  Boolean   @default(false)
+  created_by User      @relation(fields: [user_id], references: [id])
+  user_id    String
+  comment    Comment[]
+  like       Like[]
+}
+
+model Comment {
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now())
+  constent    String
+  created_by  User     @relation(fields: [user_id], references: [id])
+  user_id     String
+  created_for Post     @relation(fields: [post_id], references: [id])
+  post_id     String
+}
+
+model Like {
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now())
+  created_by  User     @relation(fields: [user_id], references: [id])
+  user_id     String
+  created_for Post     @relation(fields: [post_id], references: [id])
+  post_id     String
+}
+
+model Follows {
+  followed_by    User   @relation("followed_by", fields: [followed_by_id], references: [id])
+  followed_by_id String
+  following      User   @relation("following", fields: [following_id], references: [id])
+  following_id   String
+
+  @@id([followed_by_id, following_id])
+}
+
+enum Role {
+  ADMIN
+  USER
+}
