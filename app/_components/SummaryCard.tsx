@@ -15,7 +15,7 @@ import { Post } from "@prisma/client";
 export default function SummaryCard({ post }: { post: Post }) {
   const router = useRouter();
   return (
-    <Card className="w-full">
+    <Card className="w-full shadow-none border-none">
       <CardHeader className="h-[40px] overflow-clip">
         <CardTitle>{post.title}</CardTitle>
       </CardHeader>

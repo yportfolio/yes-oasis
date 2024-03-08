@@ -33,7 +33,7 @@ export default function Editor({
 
   const onContentUpdate = async (content: string, summary: string) => {
     setUpdating(true);
-    await update(id as string, { title });
+    await update(id as string, { content, summary });
 
     setUpdating(false);
   };
