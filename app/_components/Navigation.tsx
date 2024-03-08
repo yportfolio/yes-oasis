@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { SearchIcon } from "lucide-react";
+import { Link2, SearchIcon } from "lucide-react";
 import { UserButton } from "@clerk/nextjs";
 
 const Navigation = () => {
@@ -28,6 +28,15 @@ const Navigation = () => {
       </div>
 
       <div className="flex items-center space-x-2">
+        <Button variant="link">
+          <Link2 />
+          <Link
+            className="flex items-center font-semibold text-lg md:text-base"
+            href="/new"
+          >
+            Write
+          </Link>
+        </Button>
         <UserButton />
       </div>
     </div>

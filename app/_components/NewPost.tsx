@@ -10,9 +10,17 @@ export default function NewPost() {
 
   const onCreate = async () => {
     const post = await create({
-      title: "",
-      content: "",
-      summary: "",
+      title: "Write your title here",
+      content: JSON.stringify({
+        type: "doc",
+        content: [
+          {
+            type: "paragraph",
+            content: [{ type: "text", text: "Empty area..." }],
+          },
+        ],
+      }),
+      summary: "This is a brand new article...",
     });
 
     router.push(`${post.id}`);

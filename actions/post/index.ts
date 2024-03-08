@@ -10,7 +10,17 @@ export const findAll = async () => {
 };
 
 export const findById = async (id: string) => {
-  const post = await prisma.post.findUnique({ where: { id } });
+  const post = await prisma.post.findUnique({
+    where: { id },
+  });
+  return post;
+};
+
+export const findByIdWithComments = async (id: string) => {
+  const post = await prisma.post.findUnique({
+    where: { id },
+    include: { comment: { include: { created_by: true } } },
+  });
   return post;
 };
 
@@ -27,6 +37,12 @@ export const create = async (
       created_by: { connect: { id } },
     },
   });
+
+  return post;
+};
+
+export const update = async (id: string, data: Prisma.PostUpdateInput) => {
+  const post = await prisma.post.update({ where: { id }, data });
 
   return post;
 };

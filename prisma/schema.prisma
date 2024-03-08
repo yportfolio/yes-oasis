@@ -45,7 +45,7 @@ model Post {
 model Comment {
   id          String   @id @default(uuid())
   createdAt   DateTime @default(now())
-  constent    String
+  content     String
   created_by  User     @relation(fields: [user_id], references: [id])
   user_id     String
   created_for Post     @relation(fields: [post_id], references: [id])
