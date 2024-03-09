@@ -25,7 +25,13 @@ import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@clerk/nextjs";
 import LikeButton from "@/app/_components/LikeButton";
 
-type TCommentWithAuthor = Comment & { created_by: User };
+type TCommentWithAuthor = Comment & { created_by: User } & {
+  like: {
+    created_by: {
+      id: string;
+    };
+  }[];
+};
 
 type TCommentArea = { comments: TCommentWithAuthor[]; postId: string };
 export function CommentArea({ comments, postId }: TCommentArea) {
@@ -124,7 +130,7 @@ export function CommentArea({ comments, postId }: TCommentArea) {
 
                   <p>{comment.content}</p>
 
-                  <LikeButton />
+                  <LikeButton commentId={comment.id} like={comment.like} />
                 </div>
               ))}
             </div>

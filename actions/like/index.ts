@@ -19,35 +19,29 @@ export const findById = async (id: string) => {
 export const findByIdWithComments = async (id: string) => {
   const post = await prisma.post.findUnique({
     where: { id },
-    include: {
-      comment: {
-        include: {
-          created_by: true,
-          like: {
-            select: { created_by: { select: { id: true } } },
-          },
-        },
-      },
-    },
+    include: { comment: { include: { created_by: true } } },
   });
   return post;
 };
 
-export const create = async (
-  data: Omit<Prisma.PostCreateInput, "created_by">
-) => {
-  const id = auth().userId;
+type TLikeCreate = {
+  commentId: string;
+};
 
-  if (!id) throw new Error("user not signed in");
+export const create = async ({ commentId }: TLikeCreate) => {
+  const userId = auth().userId;
 
-  const post = await prisma.post.create({
+  if (!userId) throw new Error("user not signed in");
+
+  console.log("commentId", commentId);
+  const like = await prisma.like.create({
     data: {
-      ...data,
-      created_by: { connect: { id } },
+      comment: { connect: { id: commentId } },
+      created_by: { connect: { id: userId } },
     },
   });
 
-  return post;
+  return like;
 };
 
 export const update = async (id: string, data: Prisma.PostUpdateInput) => {
