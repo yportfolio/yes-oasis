@@ -71,11 +71,29 @@ const config = {
           "0%, 100%": { transform: "rotate(-10deg)" },
           "50%": { transform: "rotate(10deg)" },
         },
+        typing: {
+          "0%": {
+            width: "0%",
+            visibility: "hidden",
+          },
+          "100%": {
+            width: "100%",
+          },
+        },
+        blink: {
+          "50%": {
+            borderColor: "transparent",
+          },
+          "100%": {
+            borderColor: "black",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         wiggle: "wiggle 0.3s ease-in-out",
+        typing: "typing 3s steps(32), blink 1.6s infinite",
       },
     },
   },
