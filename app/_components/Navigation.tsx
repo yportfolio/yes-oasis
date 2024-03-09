@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Link2, SearchIcon } from "lucide-react";
 import { UserButton } from "@clerk/nextjs";
+import MusicPlayer from "@/app/_components/MusicPlayer";
 
 const Navigation = () => {
   return (
@@ -28,6 +29,7 @@ const Navigation = () => {
       </div>
 
       <div className="flex items-center space-x-2">
+        <MusicPlayer />
         <Button variant="link">
           <Link2 />
           <Link
