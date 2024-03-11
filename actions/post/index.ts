@@ -9,6 +9,12 @@ export const findAll = async () => {
   return post;
 };
 
+export const findMine = async (userId: string) => {
+  const post = await prisma.post.findMany({
+    where: { created_by: { id: userId } },
+  });
+  return post;
+};
 export const findById = async (id: string) => {
   const post = await prisma.post.findUnique({
     where: { id },

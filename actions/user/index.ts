@@ -1,6 +1,6 @@
 "use server";
 import prisma from "@/lib/db";
-import { Prisma } from "@prisma/client";
+import { Prisma, User } from "@prisma/client";
 
 export const create = async (data: Prisma.UserCreateInput) => {
   const user = await prisma.user.upsert({
@@ -10,4 +10,14 @@ export const create = async (data: Prisma.UserCreateInput) => {
   });
 
   return user;
+};
+
+export const findOne = (id: string) => {
+  return prisma.user.findUnique({
+    where: { id },
+    include: {
+      following: { include: { following: true } },
+      followed_by: true,
+    },
+  });
 };

@@ -13,6 +13,7 @@ export default async function UserInfo() {
     firstname: clerkUser.firstName || "",
     lastname: clerkUser.lastName || "",
     avatar_url: clerkUser.imageUrl,
+    bio: "",
   });
 
   return <div className="overflow-clip">{JSON.stringify(user)}</div>;
