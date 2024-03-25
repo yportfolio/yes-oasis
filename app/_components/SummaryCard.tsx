@@ -19,17 +19,25 @@ import {
   TooltipTrigger,
   TooltipContent,
 } from "@/components/ui/tooltip";
+import { Dropdown } from "@/app/_components/DropDown";
 
 export default function SummaryCard({ post }: { post: Post }) {
   const router = useRouter();
   return (
-    <Card className="w-full shadow-none border-none">
-      <CardHeader className="h-[40px] overflow-clip p-0">
-        <CardTitle>{post.title}</CardTitle>
-      </CardHeader>
-      <CardContent className="h-[140px] overflow-clip p-0">
-        {post.summary}
-      </CardContent>
+    <Card className="w-full shadow-none border-none ">
+      <div
+        className="cursor-pointer"
+        onClick={() => {
+          router.push(`/public/${post.id}`);
+        }}
+      >
+        <CardHeader className="h-[40px] overflow-clip p-0 ">
+          <CardTitle>{post.title}</CardTitle>
+        </CardHeader>
+        <CardContent className="h-[140px] overflow-clip p-0 ">
+          {post.summary}
+        </CardContent>
+      </div>
 
       <CardFooter className="flex justify-end space-x-3">
         <TooltipProvider>
@@ -57,7 +65,7 @@ export default function SummaryCard({ post }: { post: Post }) {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <CircleEllipsis className="cursor-pointer" />
+              <Dropdown />
             </TooltipTrigger>
             <TooltipContent>
               <p>More</p>

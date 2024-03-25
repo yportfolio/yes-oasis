@@ -10,8 +10,9 @@ type IContentProps = {
   id: string;
   title: string;
   content: string;
-  userId: string;
+  userId?: string;
   created_by: string;
+  editable?: boolean;
 };
 
 export default function Editor({
@@ -20,6 +21,7 @@ export default function Editor({
   content,
   userId,
   created_by,
+  editable = false,
 }: IContentProps) {
   const [updating, setUpdating] = useState(false);
 
@@ -43,17 +45,23 @@ export default function Editor({
 
   return (
     <div className="relative min-h-[600px]">
-      <span
-        className={`absolute right-0 ${!updating && "text-muted-foreground"}`}
-      >
-        {updating ? "updating..." : "saved"}
-      </span>
+      {editable && (
+        <span
+          className={`absolute right-0 ${!updating && "text-muted-foreground"}`}
+        >
+          {updating ? "updating..." : "saved"}
+        </span>
+      )}
 
-      <TitleEditor title={title} editable onUpdate={debouncedOnTitleUpdate} />
+      <TitleEditor
+        title={title}
+        editable={editable}
+        onUpdate={debouncedOnTitleUpdate}
+      />
 
       <Tiptap
         content={content}
-        editable={userId === created_by}
+        editable={editable && userId === created_by}
         onUpdate={debouncedOnContentUpdate}
       />
     </div>

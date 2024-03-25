@@ -6,6 +6,7 @@ import React, { useState } from "react";
 
 type TLikeButton = {
   commentId: string;
+  postId: string;
   like: {
     created_by: {
       id: string;
@@ -13,12 +14,12 @@ type TLikeButton = {
   }[];
 };
 
-export default function LikeButton({ commentId, like }: TLikeButton) {
+export default function LikeButton({ commentId, like, postId }: TLikeButton) {
   const [effect, setEffect] = useState(false);
   const { userId } = useAuth();
 
   const onLikeComment = async () => {
-    await create({ commentId });
+    await create({ commentId, postId });
   };
 
   return (

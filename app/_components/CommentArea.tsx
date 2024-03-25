@@ -130,7 +130,11 @@ export function CommentArea({ comments, postId }: TCommentArea) {
 
                   <p>{comment.content}</p>
 
-                  <LikeButton commentId={comment.id} like={comment.like} />
+                  <LikeButton
+                    commentId={comment.id}
+                    like={comment.like}
+                    postId={postId}
+                  />
                 </div>
               ))}
             </div>

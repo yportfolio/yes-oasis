@@ -26,6 +26,7 @@ export default async function Index({
         title={post.title}
         content={post.content}
         created_by={post.user_id}
+        editable={true}
       />
 
       <div>
@@ -37,8 +38,6 @@ export default async function Index({
           {`updated at ${String(post.updatedAt)}`}
         </p>
       </div>
-
-      <CommentArea comments={post.comment} postId={post.id} />
     </main>
   );
 }

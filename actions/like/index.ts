@@ -3,6 +3,7 @@
 import prisma from "@/lib/db";
 import { auth } from "@clerk/nextjs";
 import { Prisma } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 
 export const findAll = async () => {
   const post = await prisma.post.findMany();
@@ -26,20 +27,22 @@ export const findByIdWithComments = async (id: string) => {
 
 type TLikeCreate = {
   commentId: string;
+  postId: string;
 };
 
-export const create = async ({ commentId }: TLikeCreate) => {
+export const create = async ({ commentId, postId }: TLikeCreate) => {
   const userId = auth().userId;
 
   if (!userId) throw new Error("user not signed in");
 
-  console.log("commentId", commentId);
   const like = await prisma.like.create({
     data: {
       comment: { connect: { id: commentId } },
       created_by: { connect: { id: userId } },
     },
   });
+
+  revalidatePath(`/public/${postId}`);
 
   return like;
 };
